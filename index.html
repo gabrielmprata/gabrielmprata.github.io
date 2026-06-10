@@ -1,0 +1,1265 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Gabriel Prata — Data & BI Portfolio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+
+<style>
+  /* ===================== RESET & BASE ===================== */
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --blue:    #2563eb;
+    --sky:     #38bdf8;
+    --dark:    #020617;
+    --dark2:   #0a1628;
+    --dark3:   #0f1f3d;
+    --glass-bg:    rgba(255,255,255,0.04);
+    --glass-brd:   rgba(56,189,248,0.15);
+    --glass-brd2:  rgba(37,99,235,0.25);
+    --text-primary:  #f0f9ff;
+    --text-muted:    #94a3b8;
+    --text-dim:      #475569;
+    --radius-lg: 20px;
+    --radius-md: 12px;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Space Grotesk', sans-serif;
+    background: var(--dark);
+    color: var(--text-primary);
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  /* ===================== ANIMATED BACKGROUND ===================== */
+  .bg-canvas {
+    position: fixed; inset: 0; z-index: 0;
+    background: radial-gradient(ellipse 80% 60% at 20% 10%, rgba(37,99,235,0.12) 0%, transparent 60%),
+                radial-gradient(ellipse 60% 50% at 80% 80%, rgba(56,189,248,0.08) 0%, transparent 55%),
+                var(--dark);
+  }
+
+  .bg-grid {
+    position: fixed; inset: 0; z-index: 0; opacity: 0.025;
+    background-image:
+      linear-gradient(rgba(56,189,248,0.8) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(56,189,248,0.8) 1px, transparent 1px);
+    background-size: 60px 60px;
+  }
+
+  .bg-orb {
+    position: fixed; border-radius: 50%; filter: blur(80px); z-index: 0; pointer-events: none;
+  }
+  .bg-orb--1 {
+    width: 500px; height: 500px;
+    background: radial-gradient(circle, rgba(37,99,235,0.15) 0%, transparent 70%);
+    top: -100px; left: -100px;
+    animation: float1 12s ease-in-out infinite;
+  }
+  .bg-orb--2 {
+    width: 400px; height: 400px;
+    background: radial-gradient(circle, rgba(56,189,248,0.1) 0%, transparent 70%);
+    bottom: 10%; right: -80px;
+    animation: float2 16s ease-in-out infinite;
+  }
+
+  @keyframes float1 {
+    0%,100% { transform: translate(0,0); }
+    50% { transform: translate(40px, 60px); }
+  }
+  @keyframes float2 {
+    0%,100% { transform: translate(0,0); }
+    50% { transform: translate(-30px, -50px); }
+  }
+
+  /* ===================== LAYOUT ===================== */
+  .wrapper { position: relative; z-index: 1; }
+
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 24px;
+  }
+
+  /* ===================== NAV ===================== */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    padding: 16px 0;
+    background: rgba(2,6,23,0.7);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-bottom: 1px solid rgba(56,189,248,0.08);
+    transition: all 0.3s ease;
+  }
+
+  nav .container {
+    display: flex; align-items: center; justify-content: space-between;
+  }
+
+  .nav-logo {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 1rem; font-weight: 500;
+    color: var(--sky);
+    letter-spacing: -0.02em;
+  }
+  .nav-logo span { color: var(--text-muted); }
+
+  .nav-links {
+    display: flex; gap: 32px; list-style: none;
+  }
+  .nav-links a {
+    text-decoration: none;
+    font-size: 0.875rem; font-weight: 500;
+    color: var(--text-muted);
+    transition: color 0.2s;
+    letter-spacing: 0.02em;
+  }
+  .nav-links a:hover { color: var(--sky); }
+
+  .nav-cta {
+    background: transparent;
+    border: 1px solid var(--glass-brd2);
+    color: var(--sky) !important;
+    padding: 6px 16px;
+    border-radius: 6px;
+    transition: background 0.2s, border-color 0.2s !important;
+  }
+  .nav-cta:hover {
+    background: rgba(56,189,248,0.1) !important;
+    border-color: var(--sky) !important;
+  }
+
+  .hamburger {
+    display: none; flex-direction: column; gap: 5px; cursor: pointer;
+    background: none; border: none; padding: 4px;
+  }
+  .hamburger span {
+    display: block; width: 24px; height: 2px;
+    background: var(--text-muted); border-radius: 2px;
+    transition: all 0.3s;
+  }
+
+  /* ===================== HERO ===================== */
+  .hero {
+    min-height: 100vh;
+    display: flex; align-items: center;
+    padding: 120px 0 80px;
+  }
+
+  .hero-inner {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 60px; align-items: center;
+  }
+
+  .hero-eyebrow {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.75rem; font-weight: 500;
+    color: var(--sky);
+    letter-spacing: 0.15em; text-transform: uppercase;
+    display: flex; align-items: center; gap: 10px;
+    margin-bottom: 20px;
+    opacity: 0; animation: fadeUp 0.6s ease forwards;
+  }
+  .hero-eyebrow::before {
+    content: ''; display: block;
+    width: 32px; height: 1px; background: var(--sky);
+  }
+
+  .hero-name {
+    font-size: clamp(2.8rem, 6vw, 5rem);
+    font-weight: 700; line-height: 1.1;
+    letter-spacing: -0.03em;
+    color: var(--text-primary);
+    opacity: 0; animation: fadeUp 0.6s 0.1s ease forwards;
+  }
+  .hero-name-accent { color: var(--sky); }
+
+  .hero-title {
+    font-size: clamp(0.95rem, 2vw, 1.15rem);
+    color: var(--text-muted);
+    font-weight: 400;
+    margin-top: 16px; margin-bottom: 24px;
+    max-width: 540px; line-height: 1.5;
+    opacity: 0; animation: fadeUp 0.6s 0.2s ease forwards;
+  }
+
+  .hero-desc {
+    font-size: 1rem;
+    color: var(--text-muted); line-height: 1.7;
+    max-width: 520px;
+    margin-bottom: 40px;
+    opacity: 0; animation: fadeUp 0.6s 0.3s ease forwards;
+  }
+
+  .hero-stats {
+    display: flex; gap: 40px; margin-bottom: 40px;
+    opacity: 0; animation: fadeUp 0.6s 0.4s ease forwards;
+  }
+  .hero-stat-num {
+    font-size: 2rem; font-weight: 700; line-height: 1;
+    color: var(--text-primary);
+  }
+  .hero-stat-num span { color: var(--sky); }
+  .hero-stat-label {
+    font-size: 0.75rem; color: var(--text-dim); text-transform: uppercase;
+    letter-spacing: 0.08em; margin-top: 4px;
+  }
+
+  .hero-actions {
+    display: flex; gap: 16px; flex-wrap: wrap;
+    opacity: 0; animation: fadeUp 0.6s 0.5s ease forwards;
+  }
+
+  .btn-primary {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 12px 28px;
+    background: var(--blue);
+    color: white; font-weight: 600; font-size: 0.9rem;
+    text-decoration: none; border-radius: var(--radius-md);
+    border: 1px solid transparent;
+    transition: all 0.2s;
+  }
+  .btn-primary:hover {
+    background: #1d4ed8;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(37,99,235,0.4);
+  }
+
+  .btn-ghost {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 12px 28px;
+    background: var(--glass-bg);
+    color: var(--text-primary); font-weight: 500; font-size: 0.9rem;
+    text-decoration: none; border-radius: var(--radius-md);
+    border: 1px solid var(--glass-brd);
+    backdrop-filter: blur(10px);
+    transition: all 0.2s;
+  }
+  .btn-ghost:hover {
+    background: rgba(255,255,255,0.08);
+    border-color: var(--sky);
+    transform: translateY(-2px);
+  }
+
+  /* Avatar / visual panel */
+  .hero-visual {
+    opacity: 0; animation: fadeIn 0.8s 0.4s ease forwards;
+  }
+
+  .avatar-frame {
+    width: 260px; height: 260px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, rgba(37,99,235,0.2), rgba(56,189,248,0.15));
+    border: 1px solid var(--glass-brd);
+    display: flex; align-items: center; justify-content: center;
+    position: relative;
+    box-shadow: 0 0 60px rgba(37,99,235,0.2);
+  }
+  .avatar-frame::before {
+    content: ''; position: absolute; inset: -1px;
+    border-radius: 50%;
+    background: conic-gradient(from 0deg, var(--sky) 0%, transparent 30%, transparent 70%, var(--blue) 100%);
+    z-index: -1;
+    animation: spin 8s linear infinite;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  .avatar-inner {
+    width: 252px; height: 252px; border-radius: 50%;
+    background: var(--dark2);
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    gap: 8px;
+    position: relative; z-index: 1;
+  }
+
+  .avatar-icon {
+    font-size: 3.5rem; line-height: 1;
+  }
+  .avatar-initials {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.7rem; color: var(--sky);
+    letter-spacing: 0.2em; text-transform: uppercase;
+  }
+
+  .avatar-badges {
+    position: absolute;
+    display: flex; flex-direction: column; gap: 8px;
+    right: -30px; top: 50%; transform: translateY(-50%);
+  }
+  .badge-chip {
+    background: rgba(2,6,23,0.9);
+    border: 1px solid var(--glass-brd2);
+    border-radius: 8px; padding: 6px 12px;
+    font-size: 0.7rem; font-family: 'JetBrains Mono', monospace;
+    color: var(--sky); white-space: nowrap;
+    backdrop-filter: blur(10px);
+  }
+
+  /* ===================== SECTIONS COMMON ===================== */
+  section { padding: 100px 0; }
+
+  .section-header {
+    margin-bottom: 64px;
+  }
+  .section-eyebrow {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.7rem; font-weight: 500;
+    color: var(--sky); letter-spacing: 0.2em;
+    text-transform: uppercase; margin-bottom: 12px;
+    display: flex; align-items: center; gap: 12px;
+  }
+  .section-eyebrow::after {
+    content: ''; flex: 1; height: 1px;
+    background: linear-gradient(to right, var(--sky), transparent);
+    max-width: 120px;
+  }
+  .section-title {
+    font-size: clamp(1.8rem, 4vw, 2.8rem);
+    font-weight: 700; letter-spacing: -0.03em;
+    color: var(--text-primary); line-height: 1.15;
+  }
+  .section-sub {
+    font-size: 1rem; color: var(--text-muted);
+    margin-top: 12px; max-width: 560px; line-height: 1.6;
+  }
+
+  /* ===================== ABOUT ===================== */
+  .about-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 48px; align-items: start;
+  }
+
+  .about-text p { color: var(--text-muted); line-height: 1.8; margin-bottom: 20px; }
+  .about-text p:last-child { margin-bottom: 0; }
+  .about-text strong { color: var(--text-primary); font-weight: 600; }
+
+  .xp-bar-group { margin-top: 8px; }
+  .xp-item { margin-bottom: 20px; }
+  .xp-label {
+    display: flex; justify-content: space-between;
+    font-size: 0.85rem; font-weight: 500;
+    color: var(--text-muted); margin-bottom: 8px;
+  }
+  .xp-label span { color: var(--sky); }
+  .xp-track {
+    height: 6px; background: rgba(255,255,255,0.06);
+    border-radius: 3px; overflow: hidden;
+  }
+  .xp-fill {
+    height: 100%; border-radius: 3px;
+    background: linear-gradient(90deg, var(--blue), var(--sky));
+    transform: scaleX(0); transform-origin: left;
+    transition: transform 1s cubic-bezier(0.4,0,0.2,1);
+  }
+  .xp-fill.animated { transform: scaleX(1); }
+
+  /* ===================== SKILLS ===================== */
+  .skills-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 16px;
+  }
+
+  .skill-card {
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-brd);
+    border-radius: var(--radius-md);
+    padding: 20px;
+    backdrop-filter: blur(10px);
+    transition: all 0.3s;
+    cursor: default;
+  }
+  .skill-card:hover {
+    border-color: var(--sky);
+    background: rgba(56,189,248,0.06);
+    transform: translateY(-4px);
+    box-shadow: 0 12px 32px rgba(56,189,248,0.1);
+  }
+
+  .skill-icon { font-size: 1.6rem; margin-bottom: 10px; }
+  .skill-name {
+    font-size: 0.9rem; font-weight: 600; color: var(--text-primary);
+    margin-bottom: 4px;
+  }
+  .skill-desc { font-size: 0.78rem; color: var(--text-dim); line-height: 1.4; }
+
+  /* ===================== PROJECTS ===================== */
+  .projects-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+    gap: 28px;
+  }
+
+  .project-card {
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-brd);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    backdrop-filter: blur(12px);
+    transition: all 0.35s cubic-bezier(0.4,0,0.2,1);
+    display: flex; flex-direction: column;
+    position: relative;
+  }
+  .project-card::before {
+    content: ''; position: absolute;
+    top: 0; left: 0; right: 0; height: 3px;
+    background: linear-gradient(90deg, var(--blue), var(--sky));
+    opacity: 0; transition: opacity 0.3s;
+  }
+  .project-card:hover {
+    border-color: rgba(56,189,248,0.3);
+    transform: translateY(-6px);
+    box-shadow: 0 24px 48px rgba(37,99,235,0.2);
+  }
+  .project-card:hover::before { opacity: 1; }
+
+  .project-thumb {
+    height: 200px;
+    background: var(--dark3);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 4rem;
+    position: relative; overflow: hidden;
+  }
+  .project-thumb::after {
+    content: ''; position: absolute; inset: 0;
+    background: linear-gradient(to bottom, transparent 40%, rgba(10,22,40,0.8) 100%);
+  }
+  .project-thumb-bg {
+    position: absolute; inset: 0;
+    background: var(--dark3);
+    display: flex; align-items: center; justify-content: center;
+    overflow: hidden;
+  }
+  .project-thumb .thumb-icon {
+    font-size: 4rem; position: relative; z-index: 1;
+    text-shadow: 0 0 40px rgba(56,189,248,0.4);
+  }
+  .thumb-grid {
+    position: absolute; inset: 0; opacity: 0.06;
+    background-image:
+      linear-gradient(rgba(56,189,248,1) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(56,189,248,1) 1px, transparent 1px);
+    background-size: 30px 30px;
+  }
+
+  .project-body { padding: 24px; flex: 1; display: flex; flex-direction: column; }
+
+  .project-tags {
+    display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 14px;
+  }
+  .tag {
+    font-size: 0.68rem; font-family: 'JetBrains Mono', monospace;
+    font-weight: 500; letter-spacing: 0.05em;
+    color: var(--sky);
+    background: rgba(56,189,248,0.1);
+    border: 1px solid rgba(56,189,248,0.2);
+    border-radius: 4px; padding: 3px 8px;
+  }
+
+  .project-title {
+    font-size: 1.15rem; font-weight: 700;
+    color: var(--text-primary); line-height: 1.3; margin-bottom: 10px;
+  }
+  .project-desc {
+    font-size: 0.875rem; color: var(--text-muted);
+    line-height: 1.65; margin-bottom: 20px; flex: 1;
+  }
+
+  .project-highlights {
+    list-style: none;
+    margin-bottom: 20px;
+  }
+  .project-highlights li {
+    font-size: 0.8rem; color: var(--text-dim);
+    padding: 3px 0; display: flex; align-items: flex-start; gap: 8px;
+  }
+  .project-highlights li::before {
+    content: '→'; color: var(--sky); flex-shrink: 0; margin-top: 1px;
+    font-size: 0.75rem;
+  }
+
+  .project-footer {
+    display: flex; gap: 10px; padding-top: 18px;
+    border-top: 1px solid rgba(255,255,255,0.05);
+  }
+  .project-link {
+    display: inline-flex; align-items: center; gap: 6px;
+    font-size: 0.8rem; font-weight: 600;
+    text-decoration: none; padding: 8px 16px;
+    border-radius: 8px; transition: all 0.2s;
+  }
+  .project-link--github {
+    color: var(--text-muted);
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.08);
+  }
+  .project-link--github:hover {
+    color: var(--text-primary);
+    background: rgba(255,255,255,0.1);
+    border-color: rgba(255,255,255,0.2);
+  }
+  .project-link--demo {
+    color: white;
+    background: var(--blue);
+    border: 1px solid transparent;
+  }
+  .project-link--demo:hover {
+    background: #1d4ed8;
+    box-shadow: 0 4px 16px rgba(37,99,235,0.4);
+  }
+
+  /* ===================== EXPERTISE ===================== */
+  .expertise-bento {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: auto;
+    gap: 20px;
+  }
+
+  .bento-card {
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-brd);
+    border-radius: var(--radius-lg);
+    padding: 28px;
+    backdrop-filter: blur(10px);
+    transition: all 0.3s;
+  }
+  .bento-card:hover {
+    border-color: var(--glass-brd2);
+    background: rgba(37,99,235,0.06);
+    transform: translateY(-3px);
+  }
+  .bento-card--wide { grid-column: span 2; }
+  .bento-card--tall { grid-row: span 2; }
+
+  .bento-icon { font-size: 1.8rem; margin-bottom: 14px; }
+  .bento-title {
+    font-size: 1rem; font-weight: 700;
+    color: var(--text-primary); margin-bottom: 8px;
+  }
+  .bento-desc { font-size: 0.875rem; color: var(--text-muted); line-height: 1.6; }
+
+  .bento-list { list-style: none; margin-top: 12px; }
+  .bento-list li {
+    font-size: 0.8rem; color: var(--text-dim);
+    padding: 4px 0; border-bottom: 1px solid rgba(255,255,255,0.04);
+    display: flex; align-items: center; gap: 8px;
+  }
+  .bento-list li:last-child { border-bottom: none; }
+  .bento-list li::before { content: '▸'; color: var(--sky); font-size: 0.65rem; }
+
+  .stat-big {
+    font-size: 2.8rem; font-weight: 700; line-height: 1;
+    background: linear-gradient(135deg, var(--text-primary), var(--sky));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .stat-label {
+    font-size: 0.8rem; color: var(--text-dim);
+    margin-top: 6px; line-height: 1.4;
+  }
+
+  /* ===================== TIMELINE ===================== */
+  .timeline { position: relative; padding-left: 32px; }
+  .timeline::before {
+    content: ''; position: absolute;
+    left: 7px; top: 8px; bottom: 8px;
+    width: 1px;
+    background: linear-gradient(to bottom, var(--blue), var(--sky), transparent);
+  }
+  .tl-item { position: relative; margin-bottom: 40px; }
+  .tl-item:last-child { margin-bottom: 0; }
+  .tl-dot {
+    position: absolute; left: -29px; top: 6px;
+    width: 14px; height: 14px; border-radius: 50%;
+    background: var(--blue);
+    border: 2px solid var(--sky);
+    box-shadow: 0 0 12px rgba(37,99,235,0.6);
+  }
+  .tl-date {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.7rem; color: var(--sky); letter-spacing: 0.1em;
+    margin-bottom: 4px;
+  }
+  .tl-title { font-size: 1rem; font-weight: 600; color: var(--text-primary); margin-bottom: 4px; }
+  .tl-org { font-size: 0.85rem; color: var(--text-muted); margin-bottom: 8px; }
+  .tl-text { font-size: 0.85rem; color: var(--text-dim); line-height: 1.6; }
+
+  /* ===================== CONTACT ===================== */
+  .contact-glass {
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-brd);
+    border-radius: var(--radius-lg);
+    padding: 60px;
+    backdrop-filter: blur(20px);
+    text-align: center;
+    position: relative; overflow: hidden;
+  }
+  .contact-glass::before {
+    content: ''; position: absolute; inset: -2px; border-radius: calc(var(--radius-lg) + 2px);
+    background: linear-gradient(135deg, rgba(37,99,235,0.3), transparent, rgba(56,189,248,0.2));
+    z-index: -1;
+  }
+
+  .contact-glass h3 {
+    font-size: 2rem; font-weight: 700; margin-bottom: 16px;
+    color: var(--text-primary);
+  }
+  .contact-glass p { color: var(--text-muted); font-size: 1rem; margin-bottom: 40px; }
+
+  .contact-links {
+    display: flex; justify-content: center; gap: 16px; flex-wrap: wrap;
+  }
+  .contact-link {
+    display: inline-flex; align-items: center; gap: 10px;
+    text-decoration: none; padding: 14px 28px;
+    border-radius: var(--radius-md);
+    font-size: 0.9rem; font-weight: 600;
+    transition: all 0.2s;
+  }
+  .contact-link--main {
+    background: var(--blue); color: white;
+    border: 1px solid transparent;
+  }
+  .contact-link--main:hover {
+    background: #1d4ed8;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(37,99,235,0.4);
+  }
+  .contact-link--alt {
+    background: var(--glass-bg); color: var(--text-primary);
+    border: 1px solid var(--glass-brd);
+  }
+  .contact-link--alt:hover {
+    border-color: var(--sky); color: var(--sky);
+    transform: translateY(-2px);
+  }
+
+  /* ===================== FOOTER ===================== */
+  footer {
+    padding: 40px 0;
+    border-top: 1px solid rgba(255,255,255,0.04);
+    text-align: center;
+  }
+  footer p { font-size: 0.8rem; color: var(--text-dim); }
+  footer strong { color: var(--sky); font-weight: 500; }
+
+  /* ===================== DIVIDER ===================== */
+  .divider {
+    height: 1px;
+    background: linear-gradient(to right, transparent, rgba(56,189,248,0.2), transparent);
+    margin: 0;
+  }
+
+  /* ===================== ANIMATIONS ===================== */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+  }
+
+  .reveal {
+    opacity: 0; transform: translateY(32px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+  .reveal.visible {
+    opacity: 1; transform: none;
+  }
+  .reveal-delay-1 { transition-delay: 0.1s; }
+  .reveal-delay-2 { transition-delay: 0.2s; }
+  .reveal-delay-3 { transition-delay: 0.3s; }
+
+  /* ===================== SCROLLBAR ===================== */
+  ::-webkit-scrollbar { width: 6px; }
+  ::-webkit-scrollbar-track { background: var(--dark); }
+  ::-webkit-scrollbar-thumb { background: var(--blue); border-radius: 3px; }
+
+  /* ===================== RESPONSIVE ===================== */
+  @media (max-width: 900px) {
+    .hero-inner { grid-template-columns: 1fr; gap: 40px; }
+    .hero-visual { display: flex; justify-content: center; order: -1; }
+    .avatar-badges { right: -20px; }
+    .about-grid { grid-template-columns: 1fr; }
+    .expertise-bento { grid-template-columns: 1fr 1fr; }
+    .bento-card--wide { grid-column: span 2; }
+    .projects-grid { grid-template-columns: 1fr; }
+  }
+
+  @media (max-width: 640px) {
+    .nav-links { display: none; }
+    .nav-links.open {
+      display: flex; flex-direction: column;
+      position: absolute; top: 100%; left: 0; right: 0;
+      background: rgba(2,6,23,0.97);
+      border-bottom: 1px solid var(--glass-brd);
+      padding: 20px 24px; gap: 20px;
+    }
+    .hamburger { display: flex; }
+    .hero-stats { gap: 24px; }
+    .expertise-bento { grid-template-columns: 1fr; }
+    .bento-card--wide { grid-column: span 1; }
+    .contact-glass { padding: 36px 24px; }
+    .hero-actions { flex-direction: column; }
+    .btn-primary, .btn-ghost { text-align: center; justify-content: center; }
+    .avatar-frame { width: 180px; height: 180px; }
+    .avatar-inner { width: 172px; height: 172px; }
+    .avatar-badges { display: none; }
+  }
+</style>
+</head>
+
+<body>
+<div class="bg-canvas"></div>
+<div class="bg-grid"></div>
+<div class="bg-orb bg-orb--1"></div>
+<div class="bg-orb bg-orb--2"></div>
+
+<div class="wrapper">
+
+  <!-- ===== NAV ===== -->
+  <nav id="navbar">
+    <div class="container">
+      <div class="nav-logo">GP<span>.</span>data</div>
+      <ul class="nav-links" id="navLinks">
+        <li><a href="#sobre">Sobre</a></li>
+        <li><a href="#projetos">Projetos</a></li>
+        <li><a href="#expertise">Expertise</a></li>
+        <li><a href="#contato" class="nav-cta">Contato</a></li>
+      </ul>
+      <button class="hamburger" id="hamburger" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- ===== HERO ===== -->
+  <section class="hero" id="inicio">
+    <div class="container">
+      <div class="hero-inner">
+        <div class="hero-content">
+          <p class="hero-eyebrow">Data &amp; Analytics Portfolio</p>
+          <h1 class="hero-name">
+            Gabriel<br><span class="hero-name-accent">Prata</span>
+          </h1>
+          <p class="hero-title">
+            Especialista em Business Intelligence · Cientista de Dados · Data Viz Developer · Analytics Engineer
+          </p>
+          <p class="hero-desc">
+            22 anos em TI, 18 deles transformando grandes volumes de dados em decisões estratégicas no mercado de Telecomunicações. Dados não mentem — quando bem interpretados.
+          </p>
+          <div class="hero-stats">
+            <div class="hero-stat">
+              <div class="hero-stat-num">22<span>+</span></div>
+              <div class="hero-stat-label">Anos em TI</div>
+            </div>
+            <div class="hero-stat">
+              <div class="hero-stat-num">18<span>+</span></div>
+              <div class="hero-stat-label">Anos em Data Science</div>
+            </div>
+            <div class="hero-stat">
+              <div class="hero-stat-num">3</div>
+              <div class="hero-stat-label">Projetos Públicos</div>
+            </div>
+          </div>
+          <div class="hero-actions">
+            <a href="#projetos" class="btn-primary">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+              Ver Projetos
+            </a>
+            <a href="https://github.com/gabrielmprata" target="_blank" rel="noopener" class="btn-ghost">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0112 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"/></svg>
+              GitHub
+            </a>
+          </div>
+        </div>
+
+        <div class="hero-visual">
+          <div class="avatar-frame">
+            <div class="avatar-inner">
+              <div class="avatar-icon">📊</div>
+              <div class="avatar-initials">gp · data</div>
+            </div>
+            <div class="avatar-badges">
+              <div class="badge-chip">Power BI</div>
+              <div class="badge-chip">Python</div>
+              <div class="badge-chip">DAX</div>
+              <div class="badge-chip">Telecom</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- ===== ABOUT ===== -->
+  <section id="sobre">
+    <div class="container">
+      <div class="section-header reveal">
+        <p class="section-eyebrow">Sobre mim</p>
+        <h2 class="section-title">Dados como linguagem,<br>insights como resultado</h2>
+        <p class="section-sub">Uma trajetória construída na interseção entre tecnologia, dados e estratégia de negócio.</p>
+      </div>
+
+      <div class="about-grid">
+        <div class="about-text reveal">
+          <p>
+            Atuo na área de TI há <strong>22 anos</strong>, com 18 dedicados a <strong>Data Science e Advanced Analytics</strong> no mercado de Telecomunicações. Ao longo dessa jornada, especializei-me em analisar e interpretar grandes volumes de dados, transformando-os em informações acionáveis para a tomada de decisões estratégicas.
+          </p>
+          <p>
+            Meu trabalho se concentra em criar <strong>soluções analíticas de ponta</strong> — desde a engenharia de dados até o storytelling visual — combinando rigor estatístico com design orientado ao usuário. Acredito que bons dashboards não apenas mostram dados: eles contam histórias que movem organizações.
+          </p>
+          <p>
+            Baseado em <strong>Rio de Janeiro, Brasil</strong>, com experiência em projetos de análise de mercado, segurança pública, saúde e telecom analytics.
+          </p>
+        </div>
+
+        <div class="reveal reveal-delay-1">
+          <div class="xp-bar-group">
+            <div class="xp-item">
+              <div class="xp-label"><span>Power BI / DAX</span><span>95%</span></div>
+              <div class="xp-track"><div class="xp-fill" data-width="0.95"></div></div>
+            </div>
+            <div class="xp-item">
+              <div class="xp-label"><span>Python · Pandas · Plotly</span><span>88%</span></div>
+              <div class="xp-track"><div class="xp-fill" data-width="0.88"></div></div>
+            </div>
+            <div class="xp-item">
+              <div class="xp-label"><span>SQL · Modelagem Dimensional</span><span>90%</span></div>
+              <div class="xp-track"><div class="xp-fill" data-width="0.90"></div></div>
+            </div>
+            <div class="xp-item">
+              <div class="xp-label"><span>Estatística Aplicada</span><span>85%</span></div>
+              <div class="xp-track"><div class="xp-fill" data-width="0.85"></div></div>
+            </div>
+            <div class="xp-item">
+              <div class="xp-label"><span>Streamlit · Data Apps</span><span>78%</span></div>
+              <div class="xp-track"><div class="xp-fill" data-width="0.78"></div></div>
+            </div>
+            <div class="xp-item">
+              <div class="xp-label"><span>UX para BI · Figma</span><span>82%</span></div>
+              <div class="xp-track"><div class="xp-fill" data-width="0.82"></div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- ===== PROJECTS ===== -->
+  <section id="projetos">
+    <div class="container">
+      <div class="section-header reveal">
+        <p class="section-eyebrow">Projetos</p>
+        <h2 class="section-title">Analytics em ação</h2>
+        <p class="section-sub">Projetos reais com dados públicos, demonstrando capacidade analítica de ponta a ponta.</p>
+      </div>
+
+      <div class="projects-grid">
+
+        <!-- PROJECT 1 -->
+        <div class="project-card reveal">
+          <div class="project-thumb">
+            <div class="project-thumb-bg">
+              <div class="thumb-grid"></div>
+            </div>
+            <span class="thumb-icon">🛜</span>
+          </div>
+          <div class="project-body">
+            <div class="project-tags">
+              <span class="tag">Power BI</span>
+              <span class="tag">DAX</span>
+              <span class="tag">Python</span>
+              <span class="tag">Telecom</span>
+              <span class="tag">Forecasting</span>
+            </div>
+            <h3 class="project-title">Anatel — Banda Larga Fixa no Brasil</h3>
+            <p class="project-desc">
+              Dashboard analítico sobre os 55,4 milhões de acessos de Banda Larga Fixa registrados pela ANATEL em 2025. Análise de market share por operadora, expansão de fibra óptica, KPIs executivos e forecast temporal com Star Schema.
+            </p>
+            <ul class="project-highlights">
+              <li>Z-Score e detecção de anomalias por operadora</li>
+              <li>Market share dinâmico com agrupamento Top 12</li>
+              <li>Média móvel, tendência linear e forecast temporal</li>
+              <li>Mapa do Brasil + análise regional por UF</li>
+              <li>79% dos acessos são fibra óptica — análise detalhada</li>
+            </ul>
+            <div class="project-footer">
+              <a href="https://github.com/gabrielmprata/anatel_banda_larga_fixa" target="_blank" rel="noopener" class="project-link project-link--github">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0112 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"/></svg>
+                Repositório
+              </a>
+              <a href="https://app.powerbi.com/view?r=eyJrIjoiZDNjYjdmMzItOGZkNy00NWI0LTk5NmQtZDhmMGRjZWZlYjNiIiwidCI6IjY1OWNlMmI4LTA3MTQtNDE5OC04YzM4LWRjOWI2MGFhYmI1NyJ9" target="_blank" rel="noopener" class="project-link project-link--demo">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6M15 3h6v6M10 14L21 3"/></svg>
+                Ver Demo
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- PROJECT 2 -->
+        <div class="project-card reveal reveal-delay-1">
+          <div class="project-thumb">
+            <div class="project-thumb-bg">
+              <div class="thumb-grid"></div>
+            </div>
+            <span class="thumb-icon">👮</span>
+          </div>
+          <div class="project-body">
+            <div class="project-tags">
+              <span class="tag">Power BI</span>
+              <span class="tag">Python</span>
+              <span class="tag">Geoespacial</span>
+              <span class="tag">Star Schema</span>
+              <span class="tag">ISP-RJ</span>
+            </div>
+            <h3 class="project-title">Segurança Pública RJ — Dashboard ISP</h3>
+            <p class="project-desc">
+              Solução analítica completa para monitorar e interpretar dados de segurança pública do Rio de Janeiro, com séries históricas de 2003 a 2025, análise geoespacial por RISP e identificação de padrões criminais.
+            </p>
+            <ul class="project-highlights">
+              <li>Série histórica 22 anos: crimes contra vida e patrimônio</li>
+              <li>Taxa por 10 mil habitantes com variação mensal/anual</li>
+              <li>Mapa personalizado por RISP (Circunscrição de Segurança)</li>
+              <li>172 commits — projeto em evolução contínua</li>
+              <li>Dados oficiais do Instituto de Segurança Pública do RJ</li>
+            </ul>
+            <div class="project-footer">
+              <a href="https://github.com/gabrielmprata/seguranca_publica_pwrbi" target="_blank" rel="noopener" class="project-link project-link--github">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0112 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"/></svg>
+                Repositório
+              </a>
+              <a href="https://app.powerbi.com/view?r=eyJrIjoiZTcwNWI0NzUtZmNkNi00ZGQzLTkxYzAtMjIxNzBkYzBjOGRmIiwidCI6IjY1OWNlMmI4LTA3MTQtNDE5OC04YzM4LWRjOWI2MGFhYmI1NyJ9" target="_blank" rel="noopener" class="project-link project-link--demo">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6M15 3h6v6M10 14L21 3"/></svg>
+                Ver Demo
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- PROJECT 3 -->
+        <div class="project-card reveal reveal-delay-2">
+          <div class="project-thumb">
+            <div class="project-thumb-bg">
+              <div class="thumb-grid"></div>
+            </div>
+            <span class="thumb-icon">👶</span>
+          </div>
+          <div class="project-body">
+            <div class="project-tags">
+              <span class="tag">Python</span>
+              <span class="tag">Streamlit</span>
+              <span class="tag">Plotly</span>
+              <span class="tag">Pandas</span>
+              <span class="tag">SINASC</span>
+            </div>
+            <h3 class="project-title">Como os Brasileiros Chegam ao Mundo</h3>
+            <p class="project-desc">
+              Dashboard interativo em Python + Streamlit analisando o Sistema de Informações sobre Nascidos Vivos (SINASC). Em 2023: 2,53 milhões de nascimentos — 4 bebês por minuto. Análise demográfica, regional e socioeconômica.
+            </p>
+            <ul class="project-highlights">
+              <li>2,53M nascimentos em 2023 — 5ª queda consecutiva desde 2019</li>
+              <li>51,2% meninos vs 48,8% meninas — consistente desde 2000</li>
+              <li>Análise por região, estado, faixa etária das mães</li>
+              <li>Padrão de nascimentos por dia da semana e hora</li>
+              <li>185 commits — projeto mais maduro do portfólio</li>
+            </ul>
+            <div class="project-footer">
+              <a href="https://github.com/gabrielmprata/nascidos_vivos" target="_blank" rel="noopener" class="project-link project-link--github">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0112 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"/></svg>
+                Repositório
+              </a>
+              <a href="https://nascidos-vivos.streamlit.app/" target="_blank" rel="noopener" class="project-link project-link--demo">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6M15 3h6v6M10 14L21 3"/></svg>
+                Ver App
+              </a>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- ===== EXPERTISE ===== -->
+  <section id="expertise">
+    <div class="container">
+      <div class="section-header reveal">
+        <p class="section-eyebrow">Expertise</p>
+        <h2 class="section-title">Tecnologias &amp; Métodos</h2>
+      </div>
+
+      <div class="expertise-bento">
+
+        <div class="bento-card reveal">
+          <div class="bento-icon">📊</div>
+          <div class="bento-title">Business Intelligence</div>
+          <div class="bento-desc">Power BI avançado com modelagem dimensional Star Schema, KPIs executivos e design UX orientado a dados.</div>
+          <ul class="bento-list">
+            <li>Power BI Desktop &amp; Service</li>
+            <li>DAX — medidas avançadas</li>
+            <li>Power Query (M)</li>
+            <li>Figma para protótipos de dashboards</li>
+          </ul>
+        </div>
+
+        <div class="bento-card reveal reveal-delay-1">
+          <div class="stat-big">22</div>
+          <div class="stat-label">Anos de experiência em TI,<br>18 deles com Data Science</div>
+        </div>
+
+        <div class="bento-card bento-card--tall reveal reveal-delay-2">
+          <div class="bento-icon">🐍</div>
+          <div class="bento-title">Python para Data Science</div>
+          <div class="bento-desc">Ecossistema completo de análise, visualização e pré-processamento de dados com Python.</div>
+          <ul class="bento-list">
+            <li>Pandas &amp; NumPy</li>
+            <li>Plotly &amp; Matplotlib</li>
+            <li>Streamlit (data apps)</li>
+            <li>Scikit-learn (ML)</li>
+            <li>Jupyter Notebooks</li>
+            <li>Google Colab</li>
+          </ul>
+        </div>
+
+        <div class="bento-card bento-card--wide reveal reveal-delay-1">
+          <div class="bento-icon">📡</div>
+          <div class="bento-title">Telecom Intelligence</div>
+          <div class="bento-desc">18 anos de imersão no mercado de telecomunicações, com domínio de métricas setoriais: market share, churn, net-add, NPS, KPIs regulatórios (ANATEL) e análise competitiva de ISPs e operadoras de grande porte.</div>
+        </div>
+
+        <div class="bento-card reveal">
+          <div class="bento-icon">📐</div>
+          <div class="bento-title">Estatística Aplicada</div>
+          <ul class="bento-list">
+            <li>Média móvel &amp; tendência linear</li>
+            <li>Desvio padrão &amp; Z-Score</li>
+            <li>Detecção de anomalias</li>
+            <li>Forecasting temporal</li>
+            <li>Clusterização</li>
+          </ul>
+        </div>
+
+        <div class="bento-card reveal reveal-delay-1">
+          <div class="bento-icon">🗄️</div>
+          <div class="bento-title">Engenharia Analítica</div>
+          <ul class="bento-list">
+            <li>Star Schema / Snowflake</li>
+            <li>ETL &amp; Pré-processamento</li>
+            <li>SQL &amp; Power Query</li>
+            <li>Dados abertos (Gov BR)</li>
+          </ul>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- ===== TIMELINE ===== -->
+  <section id="trajetoria">
+    <div class="container">
+      <div class="section-header reveal">
+        <p class="section-eyebrow">Trajetória</p>
+        <h2 class="section-title">22 anos construindo<br>com dados</h2>
+      </div>
+
+      <div class="timeline reveal">
+        <div class="tl-item">
+          <div class="tl-dot"></div>
+          <div class="tl-date">2024 — Atual</div>
+          <div class="tl-title">Analytics Engineer &amp; Data Viz Developer</div>
+          <div class="tl-org">Projetos Independentes · Rio de Janeiro, Brasil</div>
+          <div class="tl-text">Desenvolvimento de portfólio público com projetos de alta complexidade analítica: banda larga, segurança pública e saúde. Foco em Power BI avançado, storytelling de dados e UX para BI.</div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-dot"></div>
+          <div class="tl-date">2006 — 2024</div>
+          <div class="tl-title">Especialista em Business Intelligence &amp; Data Science</div>
+          <div class="tl-org">Mercado de Telecomunicações · Brasil</div>
+          <div class="tl-text">18 anos analisando grandes volumes de dados no setor de Telecom. Desenvolvimento de soluções de Advanced Analytics, modelos preditivos, dashboards executivos e inteligência competitiva.</div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-dot"></div>
+          <div class="tl-date">2002 — 2006</div>
+          <div class="tl-title">Analista de TI</div>
+          <div class="tl-org">Início da carreira em tecnologia</div>
+          <div class="tl-text">Primeiros 4 anos construindo base técnica sólida em infraestrutura e sistemas de informação.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- ===== SKILLS GRID ===== -->
+  <section id="skills">
+    <div class="container">
+      <div class="section-header reveal">
+        <p class="section-eyebrow">Stack Técnico</p>
+        <h2 class="section-title">Ferramentas &amp; Tecnologias</h2>
+      </div>
+
+      <div class="skills-grid">
+        <div class="skill-card reveal">
+          <div class="skill-icon">⚡</div>
+          <div class="skill-name">Power BI</div>
+          <div class="skill-desc">Dashboards enterprise com modelagem dimensional avançada e UX orientado a dados</div>
+        </div>
+        <div class="skill-card reveal reveal-delay-1">
+          <div class="skill-icon">🐍</div>
+          <div class="skill-name">Python</div>
+          <div class="skill-desc">Data science, pré-processamento, visualização e aplicações web com Streamlit</div>
+        </div>
+        <div class="skill-card reveal reveal-delay-2">
+          <div class="skill-icon">📐</div>
+          <div class="skill-name">DAX</div>
+          <div class="skill-desc">Medidas avançadas, KPIs dinâmicos, cálculos de séries temporais e market share</div>
+        </div>
+        <div class="skill-card reveal">
+          <div class="skill-icon">🔬</div>
+          <div class="skill-name">Estatística</div>
+          <div class="skill-desc">Z-Score, desvio padrão, média móvel, forecasting e detecção de anomalias</div>
+        </div>
+        <div class="skill-card reveal reveal-delay-1">
+          <div class="skill-icon">🗺️</div>
+          <div class="skill-name">Geoespacial</div>
+          <div class="skill-desc">Análise por região, mapas customizados e distribuição territorial de dados</div>
+        </div>
+        <div class="skill-card reveal reveal-delay-2">
+          <div class="skill-icon">🎨</div>
+          <div class="skill-name">UX/UI para BI</div>
+          <div class="skill-desc">Prototipagem no Figma, design de dashboards centrado no usuário executivo</div>
+        </div>
+        <div class="skill-card reveal">
+          <div class="skill-icon">🗄️</div>
+          <div class="skill-name">SQL &amp; ETL</div>
+          <div class="skill-desc">Modelagem Star Schema, Power Query (M), agregação e limpeza de grandes datasets</div>
+        </div>
+        <div class="skill-card reveal reveal-delay-1">
+          <div class="skill-icon">📡</div>
+          <div class="skill-name">Telecom Analytics</div>
+          <div class="skill-desc">Market share, churn, net-add, KPIs regulatórios ANATEL e análise competitiva</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- ===== CONTACT ===== -->
+  <section id="contato">
+    <div class="container">
+      <div class="contact-glass reveal">
+        <h3>Vamos conversar sobre dados?</h3>
+        <p>Interessado em colaborar, discutir projetos ou explorar oportunidades?<br>Estou disponível no GitHub.</p>
+        <div class="contact-links">
+          <a href="https://github.com/gabrielmprata" target="_blank" rel="noopener" class="contact-link contact-link--main">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0112 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"/></svg>
+            Ver GitHub
+          </a>
+          <a href="https://nascidos-vivos.streamlit.app/" target="_blank" rel="noopener" class="contact-link contact-link--alt">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+            Ver Demo App
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== FOOTER ===== -->
+  <footer>
+    <div class="container">
+      <p>
+        Feito com dados &amp; determinação por <strong>Gabriel Prata</strong> · Rio de Janeiro, Brasil
+        <br style="display: block; margin-top: 4px;" />
+        <span style="opacity: 0.5;">22 anos em TI · 18 em Data Science · ∞ em curiosidade</span>
+      </p>
+    </div>
+  </footer>
+
+</div><!-- /wrapper -->
+
+<script>
+  // ===== NAV SCROLL EFFECT =====
+  const navbar = document.getElementById('navbar');
+  window.addEventListener('scroll', () => {
+    navbar.style.background = window.scrollY > 50
+      ? 'rgba(2,6,23,0.95)'
+      : 'rgba(2,6,23,0.7)';
+  });
+
+  // ===== HAMBURGER =====
+  const hamburger = document.getElementById('hamburger');
+  const navLinks = document.getElementById('navLinks');
+  hamburger.addEventListener('click', () => {
+    navLinks.classList.toggle('open');
+  });
+  navLinks.querySelectorAll('a').forEach(a => {
+    a.addEventListener('click', () => navLinks.classList.remove('open'));
+  });
+
+  // ===== SCROLL REVEAL =====
+  const revealEls = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.1, rootMargin: '0px 0px -60px 0px' });
+
+  revealEls.forEach(el => observer.observe(el));
+
+  // ===== XP BARS ANIMATION =====
+  const barObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const fills = entry.target.querySelectorAll('.xp-fill');
+        fills.forEach(fill => {
+          fill.classList.add('animated');
+          fill.style.transform = `scaleX(${fill.dataset.width})`;
+        });
+        barObserver.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.3 });
+
+  const xpGroup = document.querySelector('.xp-bar-group');
+  if (xpGroup) barObserver.observe(xpGroup);
+
+  // ===== SMOOTH SCROLL =====
+  document.querySelectorAll('a[href^="#"]').forEach(a => {
+    a.addEventListener('click', e => {
+      const target = document.querySelector(a.getAttribute('href'));
+      if (target) {
+        e.preventDefault();
+        const offset = 80;
+        window.scrollTo({ top: target.offsetTop - offset, behavior: 'smooth' });
+      }
+    });
+  });
+</script>
+
+</body>
+</html>
