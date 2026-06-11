@@ -252,6 +252,7 @@
   /* Avatar / visual panel */
   .hero-visual {
     opacity: 0; animation: fadeIn 0.8s 0.4s ease forwards;
+    display: flex; flex-direction: column; align-items: center; gap: 0;
   }
 
   .avatar-frame {
@@ -262,6 +263,7 @@
     display: flex; align-items: center; justify-content: center;
     position: relative;
     box-shadow: 0 0 60px rgba(37,99,235,0.2);
+    flex-shrink: 0;
   }
   .avatar-frame::before {
     content: ''; position: absolute; inset: -1px;
@@ -275,32 +277,32 @@
   .avatar-inner {
     width: 252px; height: 252px; border-radius: 50%;
     background: var(--dark2);
-    display: flex; flex-direction: column; align-items: center; justify-content: center;
-    gap: 8px;
+    overflow: hidden;
     position: relative; z-index: 1;
   }
 
-  .avatar-icon {
-    font-size: 3.5rem; line-height: 1;
-  }
-  .avatar-initials {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 0.7rem; color: var(--sky);
-    letter-spacing: 0.2em; text-transform: uppercase;
+  .avatar-inner img {
+    width: 100%; height: 100%;
+    object-fit: cover; border-radius: 50%;
+    display: block;
   }
 
   .avatar-badges {
-    position: absolute;
-    display: flex; flex-direction: column; gap: 8px;
-    right: -30px; top: 50%; transform: translateY(-50%);
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+    margin-top: 20px;
+    width: 100%;
+    max-width: 260px;
   }
   .badge-chip {
     background: rgba(2,6,23,0.9);
     border: 1px solid var(--glass-brd2);
-    border-radius: 8px; padding: 6px 12px;
+    border-radius: 8px; padding: 7px 12px;
     font-size: 0.7rem; font-family: 'JetBrains Mono', monospace;
     color: var(--sky); white-space: nowrap;
     backdrop-filter: blur(10px);
+    text-align: center;
   }
 
   /* ===================== SECTIONS COMMON ===================== */
@@ -716,7 +718,7 @@
     .btn-primary, .btn-ghost { text-align: center; justify-content: center; }
     .avatar-frame { width: 180px; height: 180px; }
     .avatar-inner { width: 172px; height: 172px; }
-    .avatar-badges { display: none; }
+    .avatar-badges { max-width: 180px; }
   }
 </style>
 </head>
@@ -789,15 +791,19 @@
         <div class="hero-visual">
           <div class="avatar-frame">
             <div class="avatar-inner">
-              <div class="avatar-icon">📊</div>
-              <div class="avatar-initials">gp · data</div>
+              <img 
+                src="https://github.com/gabrielmprata.png" 
+                alt="Gabriel Prata"
+                onerror="this.style.display='none'; this.parentElement.innerHTML='<div style=\'display:flex;flex-direction:column;align-items:center;justify-content:center;height:100%;gap:8px\'><div style=\'font-size:3.5rem\'>📊</div><div style=\'font-family:JetBrains Mono,monospace;font-size:0.7rem;color:var(--sky);letter-spacing:0.2em\'>GP·DATA</div></div>'"
+              />
             </div>
-            <div class="avatar-badges">
-              <div class="badge-chip">Power BI</div>
-              <div class="badge-chip">Python</div>
-              <div class="badge-chip">DAX</div>
-              <div class="badge-chip">Telecom</div>
-            </div>
+          </div>
+          <div class="avatar-badges">
+            <div class="badge-chip">Power BI</div>
+            <div class="badge-chip">Python</div>
+            <div class="badge-chip">DAX</div>
+            <div class="badge-chip">Telecom</div>
+          </div>
           </div>
         </div>
       </div>
