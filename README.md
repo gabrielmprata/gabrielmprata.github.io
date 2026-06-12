@@ -51,3 +51,24 @@ gabriel = {
 [![Power BI Demo](https://img.shields.io/badge/Power%20BI-Demo-F2C811?style=for-the-badge&logo=powerbi&logoColor=black)](https://app.powerbi.com/view?r=eyJrIjoiZDNjYjdmMzItOGZkNy00NWI0LTk5NmQtZDhmMGRjZWZlYjNiIiwidCI6IjY1OWNlMmI4LTA3MTQtNDE5OC04YzM4LWRjOWI2MGFhYmI1NyJ9)
 
 ---
+### 👮 Anuário de Segurança Pública — Estado do Rio de Janeiro 2025
+
+> Solução analítica para monitorar indicadores de criminalidade e atividade policial, com **série histórica de 2003 a 2025**.
+
+| Tecnologia | Descrição |
+|---|---|
+| Power BI + DAX | Dashboards com drill-through por RISP, delegacia e município |
+| Python | ETL e tratamento dos dados do ISP-RJ |
+| Geoespacial | Mapas customizados por RISP e municípios do RJ |
+| Estatística | Taxa por 10 mil hab., variação YoY, MoM e gráfico de Pareto |
+
+**Destaques:**
+- 📅 Série histórica de **22 anos** (2003–2025)
+- 🗺️ Distribuição por RISP, município e delegacia
+- 📉 Análise de homicídios, roubos, letalidade violenta e atividade policial
+- ⚖️ Dados oficiais do **Instituto de Segurança Pública do RJ**
+
+[![Repositório](https://img.shields.io/badge/Repositório-181717?style=for-the-badge&logo=github)](https://github.com/gabrielmprata/seguranca_publica_pwrbi)
+[![Power BI Demo](https://img.shields.io/badge/Power%20BI-Demo-F2C811?style=for-the-badge&logo=powerbi&logoColor=black)](https://app.powerbi.com/view?r=eyJrIjoiZTcwNWI0NzUtZmNkNi00ZGQzLTkxYzAtMjIxNzBkYzBjOGRmIiwidCI6IjY1OWNlMmI4LTA3MTQtNDE5OC04YzM4LWRjOWI2MGFhYmI1NyJ9)
+
+---
