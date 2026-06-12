@@ -72,3 +72,23 @@ gabriel = {
 [![Power BI Demo](https://img.shields.io/badge/Power%20BI-Demo-F2C811?style=for-the-badge&logo=powerbi&logoColor=black)](https://app.powerbi.com/view?r=eyJrIjoiZTcwNWI0NzUtZmNkNi00ZGQzLTkxYzAtMjIxNzBkYzBjOGRmIiwidCI6IjY1OWNlMmI4LTA3MTQtNDE5OC04YzM4LWRjOWI2MGFhYmI1NyJ9)
 
 ---
+### 👶 Como os Brasileiros Chegam ao Mundo — SINASC 2023
+
+> Dashboard interativo em **Python + Streamlit** analisando o Sistema de Informações sobre Nascidos Vivos. Em 2023: **2,53 milhões de nascimentos** — 4 bebês por minuto.
+
+| Tecnologia | Descrição |
+|---|---|
+| Python + Pandas | Processamento do dataset SINASC (dados abertos Gov BR) |
+| Plotly + Streamlit | Visualizações interativas e deploy como web app |
+| Estatística | Análise demográfica, regional e socioeconômica |
+
+**Destaques:**
+- 📉 5ª queda consecutiva de nascimentos desde 2019
+- 👦👧 51,2% meninos vs 48,8% meninas — padrão consistente desde 2000
+- 🕐 Padrão de nascimentos por **dia da semana e hora do dia**
+- 🌎 Análise por região, estado e faixa etária das mães
+
+[![Repositório](https://img.shields.io/badge/Repositório-181717?style=for-the-badge&logo=github)](https://github.com/gabrielmprata/nascidos_vivos)
+[![Streamlit App](https://img.shields.io/badge/Streamlit-App-FF4B4B?style=for-the-badge&logo=streamlit&logoColor=white)](https://nascidos-vivos.streamlit.app/)
+
+---
