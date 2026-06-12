@@ -26,3 +26,28 @@ gabriel = {
 ```
 
 ---
+## 🚀 Projetos em Destaque
+
+### 📡 Mercado de Banda Larga Fixa no Brasil — ANATEL 2025
+
+> Dashboard analítico sobre os **55,4 milhões de acessos** de Banda Larga Fixa registrados pela ANATEL.
+
+![Banda Larga Demo](https://github.com/gabrielmprata/anatel_banda_larga_fixa/raw/main/assets/demo.gif)
+
+| Tecnologia | Descrição |
+|---|---|
+| Power BI + DAX | Modelagem Star Schema, KPIs executivos, market share dinâmico |
+| Python | Pré-processamento e análise exploratória |
+| Estatística | Z-Score, média móvel, tendência linear, forecast temporal |
+| Geoespacial | Mapa do Brasil por UF com análise regional |
+
+**Destaques:**
+- 🔵 79% dos acessos são **fibra óptica** — análise detalhada por operadora
+- 📊 Market share com agrupamento **Top 12** e detecção de anomalias
+- 📈 Forecast conservador, híbrido e ensemble com erro percentual
+- 🗺️ Distribuição regional por estado e faixa de velocidade
+
+[![Repositório](https://img.shields.io/badge/Repositório-181717?style=for-the-badge&logo=github)](https://github.com/gabrielmprata/anatel_banda_larga_fixa)
+[![Power BI Demo](https://img.shields.io/badge/Power%20BI-Demo-F2C811?style=for-the-badge&logo=powerbi&logoColor=black)](https://app.powerbi.com/view?r=eyJrIjoiZDNjYjdmMzItOGZkNy00NWI0LTk5NmQtZDhmMGRjZWZlYjNiIiwidCI6IjY1OWNlMmI4LTA3MTQtNDE5OC04YzM4LWRjOWI2MGFhYmI1NyJ9)
+
+---
