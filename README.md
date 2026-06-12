@@ -116,3 +116,35 @@ gabriel = {
 </div>
 
 ---
+## 📊 GitHub Stats
+
+<div align="center">
+
+![Gabriel's GitHub Stats](https://github-readme-stats.vercel.app/api?username=gabrielmprata&show_icons=true&theme=tokyonight&hide_border=true&bg_color=0a1628&title_color=38bdf8&icon_color=2563eb&text_color=94a3b8)
+
+![Top Languages](https://github-readme-stats.vercel.app/api/top-langs/?username=gabrielmprata&layout=compact&theme=tokyonight&hide_border=true&bg_color=0a1628&title_color=38bdf8&text_color=94a3b8)
+
+</div>
+
+---
+
+## 🗂️ Áreas de Expertise
+
+| Área | Descrição |
+|---|---|
+| 📡 **Telecom Analytics** | 18 anos de mercado — market share, churn, net-add, KPIs ANATEL |
+| 📊 **Business Intelligence** | Power BI enterprise com Star Schema e UX orientado a dados |
+| 🔬 **Estatística Aplicada** | Z-Score, forecast, anomalias, média móvel, tendência |
+| 🗺️ **Análise Geoespacial** | Mapas regionais, distribuição territorial, análise por UF |
+| 🎨 **UX para BI** | Prototipagem no Figma, dashboards centrados no usuário |
+| 🐍 **Python Data Apps** | ETL, Streamlit, Plotly — da análise ao deploy |
+
+---
+
+<div align="center">
+
+*"Dados não mentem — quando bem interpretados."*
+
+**Rio de Janeiro, Brasil 🇧🇷 · 22 anos em TI · 18 em Data Science**
+
+</div>
