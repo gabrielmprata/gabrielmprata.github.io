@@ -133,9 +133,9 @@ gabriel = {
 | Área | Descrição |
 |---|---|
 | 📡 **Telecom Analytics** | 18 anos de mercado — market share, churn, net-add, KPIs ANATEL |
-| 📊 **Business Intelligence** | Power BI enterprise com Star Schema e UX orientado a dados |
+| 📊 **Business Intelligence** | Transformando dados brutos em inteligência estratégica. |
 | 🔬 **Estatística Aplicada** | Z-Score, forecast, anomalias, média móvel, tendência |
-| 🗺️ **Análise Geoespacial** | Mapas regionais, distribuição territorial, análise por UF |
+| 🗺️ **Análise Geoespacial** | Mapas regionais, distribuição territorial |
 | 🎨 **UX para BI** | Prototipagem no Figma, dashboards centrados no usuário |
 | 🐍 **Python Data Apps** | ETL, Streamlit, Plotly — da análise ao deploy |
 
