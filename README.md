@@ -13,7 +13,7 @@
 
 ## 👨‍💻 Sobre mim
 
-Atuo na área de TI há **22 anos**, com **18 deles dedicados a Business Intelligence e Advanced Analytics** no mercado de Telecomunicações. Especializado em analisar e interpretar grandes volumes de dados, transformando-os em informações úteis para a tomada de decisões estratégicas.
+Atuo na área de TI há mais de **20 anos**, sendo **19 deles dedicados a Business Intelligence e Advanced Analytics** no mercado de Telecomunicações. Especializado em analisar e interpretar grandes volumes de dados, transformando-os em informações úteis para a tomada de decisões estratégicas.
 
 ```python
 gabriel = {
