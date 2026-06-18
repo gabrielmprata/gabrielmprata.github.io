@@ -20,7 +20,7 @@ gabriel = {
     "localização"  : "Rio de Janeiro, Brasil 🇧🇷",
     "experiência"  : "22 anos em TI | 18 em Data Science",
     "setor"        : "Telecomunicações · Saúde · Segurança Pública",
-    "foco_atual"   : ["Power BI Avançado", "Python Analytics", "Storytelling com Dados"],
+    "foco_atual"   : ["Power BI Avançado", "Python Analytics", "Storytelling com Dados","Predictive Analytics"],
     "ferramentas"  : ["Power BI", "Python", "DAX", "SQL", "Streamlit", "Plotly"],
 }
 ```
