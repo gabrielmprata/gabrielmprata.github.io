@@ -5,7 +5,8 @@
 ### Especialista em Business Intelligence · Cientista de Dados · Data Viz Developer · Analytics Engineer
 
 [![GitHub](https://img.shields.io/badge/GitHub-gabrielmprata-181717?style=flat-square&logo=github)](https://github.com/gabrielmprata)
-[![GitHub-pages](https://img.shields.io/badge/GitHub%20Pages-222222?style=for-the-badge&logo=github%20Pages&logoColor=white)](https://github.com/gabrielmprata)(https://gabrielmprata.github.io/)
+
+[![GitHub-pages](https://img.shields.io/badge/GitHub%20Pages-gabrielmprata-222222?style=for-the-badge&logo=github%20Pages&logoColor=white)](https://gabrielmprata.github.io/)
 
 </div>
 
